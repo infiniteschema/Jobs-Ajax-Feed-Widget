@@ -69,9 +69,36 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 	
 	function output($options){
 		$id = 'jobs-ajax-feed-widget_' . uniqid();	
-		$feed_url = html_entity_decode($options['feed_url']);
-		if(!$feed_url)
-			return false;
+		$feed_url = html_entity_decode("http://pipes.yahoo.com/pipes/pipe.run?_id=73cfb93650ba001eca64ccec9e892944&_render=rss");
+		if($options['param_query'])
+			$feed_url .= html_entity_decode("&q=" . $options['param_query']);
+		if($options['param_location'])
+			$feed_url .= html_entity_decode("&l=" . $options['param_location']);
+		if($options['param_sort'])
+			$feed_url .= html_entity_decode("&sort=" . $options['param_sort']);
+		if($options['param_radius'])
+			$feed_url .= html_entity_decode("&radius=" . $options['param_radius']);
+		if($options['param_jobtype'])
+			$feed_url .= html_entity_decode("&jt=" . $options['param_jobtype']);
+		if($options['param_start'])
+			$feed_url .= html_entity_decode("&start=" . $options['param_start']);
+		if($options['param_limit'])
+			$feed_url .= html_entity_decode("&limit=" . $options['param_limit']);
+		if($options['param_fromage'])
+			$feed_url .= html_entity_decode("&fromage=" . $options['param_fromage']);
+		if($options['param_highlight'])
+			$feed_url .= html_entity_decode("&highlight=" . $options['param_highlight']);
+		if($options['param_filter'])
+			$feed_url .= html_entity_decode("&filter=" . $options['param_filter']);
+		if($options['param_country'])
+			$feed_url .= html_entity_decode("&co=" . $options['param_country']);
+		if($options['param_channel'])
+			$feed_url .= html_entity_decode("&chnl=" . $options['param_channel']);
+		if($options['param_publisher'])
+			$feed_url .= html_entity_decode("&publisher=" . $options['param_publisher']);
+		if($options['param_key'])
+			$feed_url .= html_entity_decode("&key=" . $options['param_key']);
+
 		$num_entries = $options['num_entries']?$options['num_entries']:5;
 		$output = "
 		<script type=\"text/javascript\">  
@@ -151,7 +178,20 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 	function update($new_instance, $old_instance) {
 		$instance = $old_instance;
 		$instance['title'] 			= strip_tags($new_instance['title']);
-		$instance['feed_url'] 		= $new_instance['feed_url'];
+		$instance['param_query'] 	= $new_instance['param_query'];
+		$instance['param_location'] = $new_instance['param_location'];
+		$instance['param_sort'] 	= $new_instance['param_sort'];
+		$instance['param_radius'] 	= $new_instance['param_radius'];
+		$instance['param_jobtype'] 	= $new_instance['param_jobtype'];
+		$instance['param_start'] 	= $new_instance['param_start'];
+		$instance['param_limit'] 	= $new_instance['param_limit'];
+		$instance['param_fromage'] 	= $new_instance['param_fromage'];
+		$instance['param_highlight'] 	= $new_instance['param_highlight'];
+		$instance['param_filter'] 	= $new_instance['param_filter'];
+		$instance['param_country'] 	= $new_instance['param_country'];
+		$instance['param_channel'] 	= $new_instance['param_channel'];
+		$instance['param_publisher'] 	= $new_instance['param_publisher'];
+		$instance['param_key'] 	= $new_instance['param_key'];
 		$instance['icon']			= $new_instance['icon'];
 		$instance['link_target'] 	= $new_instance['link_target'];
 		$instance['num_entries'] 	= $new_instance['num_entries'];
@@ -166,7 +206,20 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 			'icon'		 	=> '',
 			'link_target'	=> '_blank',
 			'num_entries'	=> 5,
-			'feed_url'		=> '',
+			'param_query'	=> '',
+			'param_location'	=> '',
+			'param_sort'	=> '',
+			'param_radius'	=> '',
+			'param_jobtype'	=> '',
+			'param_start'	=> '',
+			'param_limit'	=> '',
+			'param_fromage'	=> '',
+			'param_highlight'	=> '',
+			'param_filter'	=> '',
+			'param_country'	=> '',
+			'param_channel'	=> '',
+			'param_publisher'	=> '',
+			'param_key'	=> '',
 			'loading_text'	=> __('Loading...'),
 			'custom_css'	=> ''
 		);
@@ -176,8 +229,60 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 			<input type="text" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" class="widefat" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('feed_url'); ?>"><?php _e('Feed URL:'); ?></label>
-			<input type="text" id="<?php echo $this->get_field_id('feed_url'); ?>" name="<?php echo $this->get_field_name('feed_url'); ?>" value="<?php echo $instance['feed_url']; ?>" class="widefat"/>
+			<label for="<?php echo $this->get_field_id('param_query'); ?>"><?php _e('Search Param - query:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_query'); ?>" name="<?php echo $this->get_field_name('param_query'); ?>" value="<?php echo $instance['param_query']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_location'); ?>"><?php _e('Search Param - location:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_location'); ?>" name="<?php echo $this->get_field_name('param_location'); ?>" value="<?php echo $instance['param_location']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_sort'); ?>"><?php _e('Search Param - sort:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_sort'); ?>" name="<?php echo $this->get_field_name('param_sort'); ?>" value="<?php echo $instance['param_sort']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_radius'); ?>"><?php _e('Search Param - radius:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_radius'); ?>" name="<?php echo $this->get_field_name('param_radius'); ?>" value="<?php echo $instance['param_radius']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_jobtype'); ?>"><?php _e('Search Param - jobtype:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_jobtype'); ?>" name="<?php echo $this->get_field_name('param_jobtype'); ?>" value="<?php echo $instance['param_jobtype']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_start'); ?>"><?php _e('Search Param - start:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_start'); ?>" name="<?php echo $this->get_field_name('param_start'); ?>" value="<?php echo $instance['param_start']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_limit'); ?>"><?php _e('Search Param - limit:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_limit'); ?>" name="<?php echo $this->get_field_name('param_limit'); ?>" value="<?php echo $instance['param_limit']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_fromage'); ?>"><?php _e('Search Param - fromage:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_fromage'); ?>" name="<?php echo $this->get_field_name('param_fromage'); ?>" value="<?php echo $instance['param_fromage']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_highlight'); ?>"><?php _e('Search Param - highlight:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_highlight'); ?>" name="<?php echo $this->get_field_name('param_highlight'); ?>" value="<?php echo $instance['param_highlight']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_filter'); ?>"><?php _e('Search Param - filter:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_filter'); ?>" name="<?php echo $this->get_field_name('param_filter'); ?>" value="<?php echo $instance['param_filter']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_country'); ?>"><?php _e('Search Param - country:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_country'); ?>" name="<?php echo $this->get_field_name('param_country'); ?>" value="<?php echo $instance['param_country']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_channel'); ?>"><?php _e('Search Param - channel:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_channel'); ?>" name="<?php echo $this->get_field_name('param_channel'); ?>" value="<?php echo $instance['param_channel']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_publisher'); ?>"><?php _e('Search Param - publisher:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_publisher'); ?>" name="<?php echo $this->get_field_name('param_publisher'); ?>" value="<?php echo $instance['param_publisher']; ?>" class="widefat"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('param_key'); ?>"><?php _e('Search Param - key:'); ?></label>
+			<input type="text" id="<?php echo $this->get_field_id('param_key'); ?>" name="<?php echo $this->get_field_name('param_key'); ?>" value="<?php echo $instance['param_key']; ?>" class="widefat"/>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id('num_entries'); ?>"><?php _e('Number of Feed Entries:'); ?></label>
