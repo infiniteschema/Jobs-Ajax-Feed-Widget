@@ -70,6 +70,10 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 	function output($options){
 		$id = 'jobs-ajax-feed-widget_' . uniqid();	
 		$feed_url = html_entity_decode("http://pipes.yahoo.com/pipes/pipe.run?_id=73cfb93650ba001eca64ccec9e892944&_render=rss");
+		if($_SERVER['REMOTE_ADDR'])
+			$feed_url .= html_entity_decode("&userip=" . $_SERVER['REMOTE_ADDR']);
+		if($_SERVER['HTTP_USER_AGENT'])
+			$feed_url .= html_entity_decode("&useragent=" . $_SERVER['HTTP_USER_AGENT']);
 		if($options['param_query'])
 			$feed_url .= html_entity_decode("&q=" . $options['param_query']);
 		if($options['param_location'])
