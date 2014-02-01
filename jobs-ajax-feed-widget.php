@@ -28,26 +28,26 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-add_action('widgets_init', 'google_ajax_feed_widget_init');
+add_action('widgets_init', 'jobs_ajax_feed_widget_init');
 
-function google_ajax_feed_widget_init() {
-	register_widget('GoogleAJAXFeed_Widget');
-	add_action('wp_head', 'google_ajax_feed_wp_head');
-	add_action('wp_footer', 'google_ajax_feed_wp_footer');
+function jobs_ajax_feed_widget_init() {
+	register_widget('JobsAjaxFeed_Widget');
+	add_action('wp_head', 'jobs_ajax_feed_wp_head');
+	add_action('wp_footer', 'jobs_ajax_feed_wp_footer');
 }
 
-function google_ajax_feed_wp_head(){
+function jobs_ajax_feed_wp_head(){
 	echo '<script src="http://www.google.com/jsapi" type="text/javascript"></script>';
 }
 
-function google_ajax_feed_wp_footer(){
+function jobs_ajax_feed_wp_footer(){
 	echo '<script type="text/javascript">google.load("feeds", "1");</script>';
 }
 
-class GoogleAJAXFeed_Widget extends WP_Widget {
+class JobsAjaxFeed_Widget extends WP_Widget {
 
 	function __construct(){
-		parent::WP_Widget( 'google-ajax-feed-widget', 'Google AJAX Feed', array( 'classname' => 'google-ajax-feed-widget', 'description' => __('Use this widget to add RSS Feeds. This widget uses Google AJAX Feed API') ) );
+		parent::WP_Widget( 'jobs-ajax-feed-widget', 'Jobs Ajax Feed', array( 'classname' => 'jobs-ajax-feed-widget', 'description' => __('Display job listings in an Ajax-powered RSS feed widget.') ) );
 	}
 	
 	function widget($args, $instance){
@@ -68,7 +68,7 @@ class GoogleAJAXFeed_Widget extends WP_Widget {
 	}
 	
 	function output($options){
-		$id = 'google-ajax-feed-widget_' . uniqid();	
+		$id = 'jobs-ajax-feed-widget_' . uniqid();	
 		$feed_url = html_entity_decode($options['feed_url']);
 		if(!$feed_url)
 			return false;
@@ -83,22 +83,22 @@ class GoogleAJAXFeed_Widget extends WP_Widget {
 					if (!result.error) {
 						var container = document.getElementById('{$id}');
 						var list = document.createElement('ul');
-						list.setAttribute('class', 'google-ajax-feed-list');
+						list.setAttribute('class', 'jobs-ajax-feed-list');
 						container.innerHTML = '';
 						for (var i = 0; i < result.feed.entries.length; i++) {
 							var entry = result.feed.entries[i];
 							var item = document.createElement('li');
-							item.setAttribute('class', 'google-ajax-feed-item');
+							item.setAttribute('class', 'jobs-ajax-feed-item');
 							var link = document.createElement('a');
 							link.innerHTML = entry.title;
 							link.href = entry.link;
 							link.setAttribute('target', '{$options[link_target]}')
 							var text = document.createElement('span');
-							text.setAttribute('class', 'google-ajax-feed-text');
+							text.setAttribute('class', 'jobs-ajax-feed-text');
 							text.appendChild(link);
 							item.appendChild(text);					  
 							var date = document.createElement('span');
-							date.setAttribute('class', 'google-ajax-feed-date');
+							date.setAttribute('class', 'jobs-ajax-feed-date');
 							date.appendChild(document.createTextNode(relativeDate(entry.publishedDate)));
 							item.appendChild(date);
 							list.appendChild(item);
@@ -127,23 +127,23 @@ class GoogleAJAXFeed_Widget extends WP_Widget {
 			}
 		</script>
 		<style>
-			.widget ul.google-ajax-feed-list li {
+			.widget ul.jobs-ajax-feed-list li {
 				padding-bottom: 10px;
 				margin: 0;".($options['icon']?"
 				padding-left:25px;
 				background:url({$options['icon']}) no-repeat left 2px;
 				":"")."
 			}
-			.widget ul.google-ajax-feed-list .google-ajax-feed-text {
+			.widget ul.jobs-ajax-feed-list .jobs-ajax-feed-text {
 				display: block;
 			}
-			.widget ul.google-ajax-feed-list .google-ajax-feed-date {
+			.widget ul.jobs-ajax-feed-list .jobs-ajax-feed-date {
 				display: block;
 				color: #5c5c5c;
 			}
 			".$options['custom_css']."
 		</style>
-		<div id=\"{$id}\" class=\"google-ajax-feed-div\">{$options['loading_text']}</div>
+		<div id=\"{$id}\" class=\"jobs-ajax-feed-div\">{$options['loading_text']}</div>
 		";
 		return $output;
 	}
@@ -202,7 +202,7 @@ class GoogleAJAXFeed_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id('custom_css'); ?>"><?php _e('Custom CSS:'); ?></label>
 			<textarea id="<?php echo $this->get_field_id('custom_css'); ?>" name="<?php echo $this->get_field_name('custom_css'); ?>" class="widefat"><?php echo $instance['custom_css']; ?></textarea>
             <span>This widget uses following classes:</span>
-            <em>google-ajax-feed-widget</em><br /><em>google-ajax-feed-div</em><br /><em>google-ajax-feed-list</em><br /><em>google-ajax-feed-item</em><br /><em>google-ajax-feed-text</em><br /><em>google-ajax-feed-date</em>
+            <em>jobs-ajax-feed-widget</em><br /><em>jobs-ajax-feed-div</em><br /><em>jobs-ajax-feed-list</em><br /><em>jobs-ajax-feed-item</em><br /><em>jobs-ajax-feed-text</em><br /><em>jobs-ajax-feed-date</em>
 		</p>
 	<?php
 	}
