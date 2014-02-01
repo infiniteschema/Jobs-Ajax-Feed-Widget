@@ -5,7 +5,7 @@
  * Description: Display job listings in an Ajax-powered RSS feed widget.
  * Version: 1.0
  * Author: Calen Fretts
- * Author URI: http://calenfretts.com
+ * Author URI: http://infiniteschema.com
  * License: GPLv2
  * GitHub Plugin URI: https://github.com/infiniteschema/Jobs-Ajax-Feed-Widget
  */

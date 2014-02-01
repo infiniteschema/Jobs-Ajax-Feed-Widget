@@ -1,6 +1,6 @@
 === Jobs Ajax Feed Widget ===
 Contributors: Frettsy
-Tags: secure, rss, google, ajax, feed, widget, jobs
+Tags: rss, ajax, feed, jobs, indeed.com, indeed, indeed api
 Requires at least: 2.0.2
 Tested up to: 3.8.1
 Stable tag: trunk
