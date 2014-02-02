@@ -96,8 +96,10 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 			$feed_url .= html_entity_decode("&filter=" . $options['param_filter']);
 		if($options['param_country'])
 			$feed_url .= html_entity_decode("&co=" . $options['param_country']);
-		if($options['param_channel'])
+		if($options['param_channel'] && ($instance['param_publisher'] && $instance['param_key']))
 			$feed_url .= html_entity_decode("&chnl=" . $options['param_channel']);
+		else
+			$feed_url .= html_entity_decode("&chnl=plugin");
 		if($options['param_publisher'])
 			$feed_url .= html_entity_decode("&publisher=" . $options['param_publisher']);
 		if($options['param_key'])
@@ -276,10 +278,12 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id('param_country'); ?>"><?php _e('Search Param - country:'); ?></label>
 			<input type="text" id="<?php echo $this->get_field_id('param_country'); ?>" name="<?php echo $this->get_field_name('param_country'); ?>" value="<?php echo $instance['param_country']; ?>" class="widefat"/>
 		</p>
+		<?php if ($instance['param_publisher'] && $instance['param_key']) { ?>
 		<p>
 			<label for="<?php echo $this->get_field_id('param_channel'); ?>"><?php _e('Search Param - channel:'); ?></label>
 			<input type="text" id="<?php echo $this->get_field_id('param_channel'); ?>" name="<?php echo $this->get_field_name('param_channel'); ?>" value="<?php echo $instance['param_channel']; ?>" class="widefat"/>
 		</p>
+		<?php } ?>
 		<p>
 			<label for="<?php echo $this->get_field_id('param_publisher'); ?>"><?php _e('Search Param - publisher:'); ?></label>
 			<input type="text" id="<?php echo $this->get_field_id('param_publisher'); ?>" name="<?php echo $this->get_field_name('param_publisher'); ?>" value="<?php echo $instance['param_publisher']; ?>" class="widefat"/>
