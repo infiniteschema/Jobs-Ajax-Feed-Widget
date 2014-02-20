@@ -38,6 +38,14 @@ key	RSS feed access key.
 * Upload through 'Plugins' menu in WordPress
 * Activate
 
+Also, if you’ve added custom user profile fields "pubid_indeed" and "pubkey_indeed", you can add something like the following to your functions.php:
+
+define("META_KEY_PUBID_INDEED", "pubid_indeed");
+define("META_KEY_PUBKEY_INDEED", "pubkey_indeed");
+
+
+Look in the code for further info about using these fields.
+
 == Frequently Asked Questions ==
 
 == Screenshots ==
@@ -47,6 +55,10 @@ key	RSS feed access key.
 2. Widget preview
 
 == Changelog ==
+
+= 1.1 =
+* Added required attribution link.
+* Ability to use author_meta keys defined by META_KEY_PUBID_INDEED and META_KEY_PUBKEY_INDEED if widget-specific fields are left blank.
 
 = 1.0 =
 * First release.
