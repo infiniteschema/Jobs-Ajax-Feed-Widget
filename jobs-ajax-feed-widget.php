@@ -3,7 +3,7 @@
  * Plugin Name: Jobs Ajax Feed Widget
  * Plugin URI: https://github.com/infiniteschema/Jobs-Ajax-Feed-Widget
  * Description: Display job listings in an Ajax-powered RSS feed widget.
- * Version: 1.0
+ * Version: 1.1
  * Author: Calen Fretts
  * Author URI: http://infiniteschema.com
  * License: GPLv2
@@ -100,10 +100,20 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 			$feed_url .= html_entity_decode("&chnl=" . $options['param_channel']);
 		else
 			$feed_url .= html_entity_decode("&chnl=plugin");
+
+		if(defined("META_KEY_PUBID_INDEED") || defined("META_KEY_PUBKEY_INDEED")) {
+			$blog_admins = get_users('role=administrator&orderby=ID');
+			$admin_id = $blog_admins[0]->ID;
+		}
+
 		if($options['param_publisher'])
 			$feed_url .= html_entity_decode("&publisher=" . $options['param_publisher']);
+		else if(defined("META_KEY_PUBID_INDEED") && ($pubid_indeed = get_the_author_meta(META_KEY_PUBID_INDEED, $admin_id)))
+			$feed_url .= html_entity_decode("&publisher=" . $pubid_indeed);
 		if($options['param_key'])
 			$feed_url .= html_entity_decode("&key=" . $options['param_key']);
+		else if(defined("META_KEY_PUBKEY_INDEED") && ($pubkey_indeed = get_the_author_meta(META_KEY_PUBKEY_INDEED, $admin_id)))
+			$feed_url .= html_entity_decode("&key=" . $pubkey_indeed);
 
 		$num_entries = $options['num_entries']?$options['num_entries']:5;
 		$output = "
@@ -178,6 +188,9 @@ class JobsAjaxFeed_Widget extends WP_Widget {
 		</style>
 		<div id=\"{$id}\" class=\"jobs-ajax-feed-div\">{$options['loading_text']}</div>
 		";
+		$output .= <<<EOT
+<span class="indeed_at"><a href="http://www.indeed.com/?indpubnum=9744949221201476">jobs</a> by <a href="http://www.indeed.com/?indpubnum=9744949221201476" title="Job Search"><img src="http://www.indeed.com/p/jobsearch.gif" style="border: 0; vertical-align: middle;" alt="Indeed job search"></a></span>
+EOT;
 		return $output;
 	}
 	
